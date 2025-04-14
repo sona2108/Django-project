@@ -12,3 +12,10 @@ __pycache__/
 
 # Ignore environment variables
 .env
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+
