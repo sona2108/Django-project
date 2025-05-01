@@ -3,9 +3,26 @@ version: "3.9"
 services:
   web:
     build: .
-    container_name: django-app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
     ports:
       - "8000:8000"
+    depends_on:
+      - redis
+      - celery
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+    command: celery -A django-app worker --loglevel=info
     volumes:
-      - .:/app
-    command: python manage.py runserver 0.0.0.0:8000
+      - .:/code
+    depends_on:
+      - redis
+
+
