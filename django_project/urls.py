@@ -20,6 +20,8 @@ from users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from blog import views as blog_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,7 +41,9 @@ urlpatterns = [
     path('password-reset-complete/', 
         auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'),
         name='password_reset_complete'),
-    path('blog/', include('blog.urls'))
+    path('blog/', include('blog.urls')),
+    path('run-task/', blog_views.trigger_task, name='run-task'),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

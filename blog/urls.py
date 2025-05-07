@@ -8,6 +8,7 @@ from .views import (
     PostDeleteView,
     UserPostListView
 )
+from .views import trigger_task
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
@@ -16,5 +17,6 @@ urlpatterns = [
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete', PostDeleteView.as_view(), name='post-delete'),
-    path('about/', views.about, name='blog-about')
+    path('about/', views.about, name='blog-about'),
+    path('run-task/', trigger_task, name='run-task'),
 ]

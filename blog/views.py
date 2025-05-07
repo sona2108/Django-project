@@ -10,6 +10,8 @@ from django.views.generic import (
 )
 from django.http import HttpResponse
 from .models import Post
+from django.http import JsonResponse
+from .tasks import task
 
 def home (request):
     context = {
@@ -75,3 +77,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
+
+def trigger_task(request):
+    task.delay()  
+    return JsonResponse({"message": "task has been triggered!"})

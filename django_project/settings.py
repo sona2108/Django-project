@@ -88,13 +88,15 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blog_django',       
-        'USER': 'sona',               
-        'PASSWORD': 'anything',       
-        'HOST': 'localhost',         
-        'PORT': '5432',  
+        'NAME': os.environ.get('DB_NAME', 'blog_django'),
+        'USER': os.environ.get('DB_USER', 'sona'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'anything'),
+        'HOST': os.environ.get('DB_HOST', 'db'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
-}
+    
+    }
+
 
 
 # Password validation
@@ -165,14 +167,10 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 CELERY_RESULT_BACKEND = "django-db"
 
-# This configures Redis as the datastore between Django + Celery
-CELERY_BROKER_URL = config('CELERY_BROKER_REDIS_URL', default='redis://localhost:6379')
-# if you out to use os.environ the config is:
-# CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_REDIS_URL', 'redis://localhost:6379')
 
+CELERY_BROKER_URL = config('CELERY_BROKER_REDIS_URL', default='redis://localhost:6379/0')
 
-# this allows you to schedule items in the Django admin.
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler' 
 
 
 

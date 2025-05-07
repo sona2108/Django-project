@@ -1,4 +1,4 @@
-version: "3.9"
+
 
 services:
   web:
@@ -8,9 +8,17 @@ services:
       - .:/code
     ports:
       - "8000:8000"
+
     depends_on:
       - redis
       - celery
+      - db  # add postgres dependency
+    environment:
+      DB_NAME: blog_django
+      DB_USER: sona
+      DB_PASSWORD: anything
+      DB_HOST: db
+      DB_PORT: 5432
 
   redis:
     image: redis:latest
@@ -19,10 +27,27 @@ services:
 
   celery:
     build: .
-    command: celery -A django-app worker --loglevel=info
+    command: celery -A django_project worker --loglevel=info
     volumes:
       - .:/code
     depends_on:
       - redis
+      - db  
+
+  db:  
+    image: postgres:13
+    environment:
+      POSTGRES_DB: blog_django
+      POSTGRES_USER: sona
+      POSTGRES_PASSWORD: anything
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
+
+
 
 
