@@ -1,0 +1,108 @@
+[2025-06-16 16:21:43,049] INFO django.utils.autoreload Watching for file changes with StatReloader
+[2025-06-16 16:21:43,135] DEBUG blog.views Testing file log output
+[2025-06-16 16:51:35,884] INFO django.utils.autoreload Watching for file changes with StatReloader
+[2025-06-16 16:51:35,953] DEBUG blog.views Testing file log output
+[2025-06-16 17:01:52,508] DEBUG celery.utils.functional 
+def send_email_task():
+    return 1
+
+[2025-06-16 17:01:52,514] DEBUG celery.utils.functional 
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+
+[2025-06-16 17:01:52,516] DEBUG celery.utils.functional 
+def xmap(task, it):
+    return 1
+
+[2025-06-16 17:01:52,518] DEBUG celery.utils.functional 
+def chain(*args, **kwargs):
+    return 1
+
+[2025-06-16 17:01:52,519] DEBUG celery.utils.functional 
+def xstarmap(task, it):
+    return 1
+
+[2025-06-16 17:01:52,526] DEBUG celery.utils.functional 
+def export_logs_to_csv_and_email():
+    return 1
+
+[2025-06-16 17:01:52,528] DEBUG celery.utils.functional 
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+
+[2025-06-16 17:01:52,530] DEBUG celery.utils.functional 
+def accumulate(self, *args, **kwargs):
+    return 1
+
+[2025-06-16 17:01:52,532] DEBUG celery.utils.functional 
+def send_daily_blog_summary():
+    return 1
+
+[2025-06-16 17:01:52,533] DEBUG celery.utils.functional 
+def chunks(task, it, n):
+    return 1
+
+[2025-06-16 17:01:52,535] DEBUG celery.utils.functional 
+def send_new_post_notification(post_title, post_content):
+    return 1
+
+[2025-06-16 17:01:52,537] DEBUG celery.utils.functional 
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+
+[2025-06-16 17:01:52,540] DEBUG celery.utils.functional 
+def backend_cleanup():
+    return 1
+
+[2025-06-19 10:20:42,135] DEBUG celery.utils.functional 
+def group(self, tasks, result, group_id, partial_args, add_to_parent=0):
+    return 1
+
+[2025-06-19 10:20:42,143] DEBUG celery.utils.functional 
+def xmap(task, it):
+    return 1
+
+[2025-06-19 10:20:42,144] DEBUG celery.utils.functional 
+def chain(*args, **kwargs):
+    return 1
+
+[2025-06-19 10:20:42,151] DEBUG celery.utils.functional 
+def export_logs_to_csv_and_email():
+    return 1
+
+[2025-06-19 10:20:42,152] DEBUG celery.utils.functional 
+def xstarmap(task, it):
+    return 1
+
+[2025-06-19 10:20:42,153] DEBUG celery.utils.functional 
+def send_daily_blog_summary():
+    return 1
+
+[2025-06-19 10:20:42,154] DEBUG celery.utils.functional 
+def chord(self, header, body, partial_args=0, interval=1, countdown=2, max_retries=3, eager=4, **kwargs):
+    return 1
+
+[2025-06-19 10:20:42,155] DEBUG celery.utils.functional 
+def accumulate(self, *args, **kwargs):
+    return 1
+
+[2025-06-19 10:20:42,157] DEBUG celery.utils.functional 
+def send_new_post_notification(post_title, post_content):
+    return 1
+
+[2025-06-19 10:20:42,160] DEBUG celery.utils.functional 
+def chunks(task, it, n):
+    return 1
+
+[2025-06-19 10:20:42,165] DEBUG celery.utils.functional 
+def send_email_task():
+    return 1
+
+[2025-06-19 10:20:42,167] DEBUG celery.utils.functional 
+def unlock_chord(self, group_id, callback, interval=0, max_retries=1, result=2, Result=3, GroupResult=4, result_from_tuple=5, **kwargs):
+    return 1
+
+[2025-06-19 10:20:42,168] DEBUG celery.utils.functional 
+def backend_cleanup():
+    return 1
+

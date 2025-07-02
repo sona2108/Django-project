@@ -6,34 +6,64 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
+      - ./media:/app/media
+      - ./staticfiles:/app/static 
+      - ./logs:/app/logs 
     ports:
       - "8000:8000"
-
+    
     depends_on:
       - redis
       - celery
-      - db  # add postgres dependency
+      - db  
     environment:
+      EMAIL_USER: sona.sharma2183@gmail.com
+      EMAIL_PASS: otjrpfivrsjmeqes #erpdfirttpfyiiwn # pphioisjqdbnonob  #uflyaijiqqwogttq ,otjr pfiv rsjm eqes
       DB_NAME: blog_django
       DB_USER: sona
       DB_PASSWORD: anything
       DB_HOST: db
       DB_PORT: 5432
+      REDIS_HOST: redis
+    networks:
+      - app-network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
 
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
+    networks:
+    - app-network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
 
   celery:
     build: .
-    command: celery -A django_project worker --loglevel=info
+    command: celery -A django_project worker -B --loglevel=info
     volumes:
       - .:/code
     depends_on:
       - redis
       - db  
-
+    environment:
+      EMAIL_USER: sona.sharma2183@gmail.com
+      EMAIL_PASS: otjrpfivrsjmeqes
+      DB_NAME: blog_django
+      DB_USER: sona
+      DB_PASSWORD: anything
+      DB_HOST: db
+      DB_PORT: 5432
+    networks:
+      - app-network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
   db:  
     image: postgres:13
     environment:
@@ -44,10 +74,16 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+    - app-network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
 
 volumes:
   postgres_data:
 
-
-
-
+networks:
+  app-network:
+    driver: bridge

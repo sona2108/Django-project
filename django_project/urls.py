@@ -43,7 +43,8 @@ urlpatterns = [
         name='password_reset_complete'),
     path('blog/', include('blog.urls')),
     path('run-task/', blog_views.trigger_task, name='run-task'),
-    
+    path('test-cache/', blog_views.test_cache_view, name='test-cache'),
+    path('schedulemail/', blog_views.schedule_mail, name='schedulemail')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

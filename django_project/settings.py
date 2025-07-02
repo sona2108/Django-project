@@ -16,6 +16,7 @@ import storages
 from decouple import config 
 
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,7 +30,7 @@ SECRET_KEY = 'django-insecure-llt%60(4p6vbd@ufngjqq4^$@i=^hdk%%cbfpjvcmf(_icm$a#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -42,13 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog.apps.BlogConfig',
-    'users.apps.UsersConfig',
+    'users',
     'crispy_forms',
     'crispy_bootstrap4',
     'storages',
     'django_celery_beat',
-    'django_celery_results'
+    'django_celery_results',
+    'blog'
+    
 ]
 
 MIDDLEWARE = [
@@ -91,11 +93,53 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'blog_django'),
         'USER': os.environ.get('DB_USER', 'sona'),
         'PASSWORD': os.environ.get('DB_PASSWORD', 'anything'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
     
     }
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/0',  
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
+
+LOGGING_DIR = BASE_DIR / "db"
+LOGGING_DIR.mkdir(exist_ok=True)
+
+from blog.logging_handlers import DatabaseLogHandler
+
+ 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "db": {
+            "class": "blog.logging_handlers.DatabaseLogHandler",  
+            "level": "INFO",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["db", "console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
 
 
 
@@ -123,7 +167,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -133,7 +177,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -147,15 +195,18 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login'
-
 LOGOUT_REDIRECT_URL = 'login'  
 
-EMAIL_BACKEND = 'DJANGO.CORE.MAIL.BACKENDS.SMTP.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('sona.sharma21x8@gmail.com')
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY ')
@@ -165,11 +216,9 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-CELERY_RESULT_BACKEND = "django-db"
 
-
-CELERY_BROKER_URL = config('CELERY_BROKER_REDIS_URL', default='redis://localhost:6379/0')
-
+CELERY_BROKER_URL = config('CELERY_BROKER_REDIS_URL', default='redis://redis:6379/0')
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler' 
 
 

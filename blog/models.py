@@ -14,3 +14,9 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+class LogEntry(models.Model):
+    level = models.CharField(max_length=20)
+    message = models.TextField()
+    logger_name = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(auto_now_add=True)
